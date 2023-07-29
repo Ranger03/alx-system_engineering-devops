@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# list all my currently running processes
+# Script that prints running processes in full format for all users
 
-# source: https://linuxize.com/post/ps-command-in-linux/
-ps -auxf
+ps auxf
