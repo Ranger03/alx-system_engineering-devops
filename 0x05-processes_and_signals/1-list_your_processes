@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-# Script that prints running processes in full format for all users
+# Display all running processes
 
-ps auxf
+ps -auxf
