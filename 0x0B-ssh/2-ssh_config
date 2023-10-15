@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
 # This script configure SSH configuration file to our needs
-PasswordAuthentication no
-IdentityFile ~/.ssh/school
+
+Host *
+    PasswordAuthentication no
+    IdentityFile ~/.ssh/school
+    HashKnownHosts yes
+    GSSAPIAuthentication yes
+    GSSAPIDelegateCredentials no
