@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+<<<<<<< HEAD
 # server-01 login
 
 eval $("ssh-agent")
@@ -6,3 +7,7 @@ eval $("ssh-agent")
 ssh-add ~/.ssh/school
 
 ssh ubuntu@3.85.54.87
+=======
+# Connects to my Holberton server.
+ssh -i ~/.ssh/school ubuntu@54.146.78.165
+>>>>>>> 0658c823182e7022ace6b0a8e595c8f31e9ac268
