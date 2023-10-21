@@ -1,3 +1,8 @@
 #!/usr/bin/env bash
 # Connects to my Holberton server.
-ssh -i ~/.ssh/school ubuntu@54.164.152.22
+
+eval $("ssh-agent")
+
+ssh -i ~/.ssh/school
+
+ubuntu@54.164.152.22
