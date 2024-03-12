@@ -1,28 +1,30 @@
 #!/usr/bin/python3
-"""
-Using reddit's API
-"""
+""" This modules defines a function recurse that
+queries the Reddit API and returns a list containing the titles of all hot
+ articles for a given subreddit. """
+
 import requests
-after = None
 
 
-def recurse(subreddit, hot_list=[]):
-    """returning top ten post titles recursively"""
-    global after
-    user_agent = {'User-Agent': 'api_advanced-project'}
-    url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
-    parameters = {'after': after}
-    results = requests.get(url, params=parameters, headers=user_agent,
-                           allow_redirects=False)
+def recurse(subreddit, hot_list=[], count=0, after=None):
+    """queries the Reddit API and returns a list containing the titles of all
+ hot articles for a given subreddit."""
 
-    if results.status_code == 200:
-        after_data = results.json().get("data").get("after")
-        if after_data is not None:
-            after = after_data
-            recurse(subreddit, hot_list)
-        all_titles = results.json().get("data").get("children")
-        for title_ in all_titles:
-            hot_list.append(title_.get("data").get("title"))
-        return hot_list
-    else:
-        return (None)
+    response = requests.get("https://www.reddit.com/r/{}/hot.json"
+                            .format(subreddit),
+                            headers={"User-Agent": "MyPythonScript"},
+                            params={"count": count, "after": after},
+                            allow_redirects=False)
+    if response.status_code >= 400:
+        return None
+
+    full_hotlst = hot_list + [child.get("data").get("title")
+                              for child in response.json()
+                              .get("data")
+                              .get("children")]
+    page_info = response.json()
+    if not page_info.get("data").get("after"):
+        return full_hotlst
+
+    return recurse(subreddit, full_hotlst, page_info.get("data").get("count"),
+                   page_info.get("data").get("after"))
